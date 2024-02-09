@@ -59,89 +59,199 @@ int toss(){
     return toss1;
 }
 int main(){
-    printf("WELCOME TO 5x5 TIC-TAC-TOE!\nby Kingsuk Panda\n\n\nThis is your tic-tac-toe board:\n\n");
-    startboard();
-    print();
-    printf("\n\nWhen asked for a position to play your move, enter the row and column for the position.\nWhen you score 4 consecutive Xs or Os, you win! Get ready for the game!!");
+  printf("WELCOME TO 5x5 TIC-TAC-TOE!\nby Kingsuk Panda\n\n\nThis is your tic-tac-toe board:\n\n");
+  startboard();
+  print();
+  printf("\n\nWhen asked for a position to play your move, enter the row and column for the position.\nWhen you score 4 consecutive Xs or Os, you win! Get ready for the game!!\n\nSelect your game mode(type in the option number):\n1. Player vs Player\n2. Player vs Computer\n\nMode: ");
+  int mode;
+  scanf("%d",&mode);
+  if(mode==1){
     printf("\n\n\nMODE: PLAYER VS PLAYER\n\nThe LUCK GODS have decided that ");
     int x,y;
     char currentplayer;
     int toss2=toss();
         if(toss2==1){
-            currentplayer='X';
-            printf("player X goes first!\n\nPlayer X, enter the position where you want to place your X:\nRow: ");
+          currentplayer='X';
+          printf("player X goes first!\n\nPlayer X, enter the position where you want to place your X:\nRow: ");
+          scanf("%d",&x);
+          printf("\nColumn:");
+          scanf("%d",&y);
+          x--;
+          y--;
+          arr[x][y]=currentplayer;
+          currentplayer='O';
+          while(!end()){
+              print();
+              printf("\nPlayer %c, enter the position where you want to place your %c:\nRow: ",currentplayer,currentplayer);
+              scanf("%d",&x);
+              printf("\nColumn: ");
+              scanf("%d",&y);
+              x--;
+              y--;
+              if(valid(x,y)){
+                  arr[x][y]=currentplayer;
+                  if(currentplayer=='O'){
+                      currentplayer='X';
+                  }
+                  else{
+                      currentplayer='O';
+                  }
+              }
+              else{
+                      printf("\nINVALID POSITION OR MOVE!");
+              }   
+          }
+          print();
+          if(end()==0){
+              printf("\nIt's a draw!!");
+              return 0;
+          }
+          printf("\nPlayer %c wins!!",currentplayer);
+      }
+      else{
+          currentplayer='O';
+          printf("player O goes first!\n\nPlayer O, enter the position where you want to place your X:\nRow: ");
+          scanf("%d",&x);
+          printf("\nColumn:");
+          scanf("%d",&y);
+          x--;
+          y--;
+          arr[x][y]=currentplayer;
+          currentplayer='X';
+          while(!end()){
+              print();
+              printf("\nPlayer %c, enter the position where you want to place your %c:\nRow: ",currentplayer,currentplayer);
+              scanf("%d",&x);
+              printf("\nColumn: ");
+              scanf("%d",&y);
+              x--;
+              y--;
+              if(valid(x,y)){
+                  arr[x][y]=currentplayer;
+                  if(currentplayer=='O'){
+                      currentplayer='X';
+                  }
+                  else{
+                      currentplayer='O';
+                  }
+              }
+              else{
+                    printf("\nINVALID POSITION OR MOVE!");
+              }   
+          }
+          print();
+          if(end()==0){
+              printf("\nIt's a draw!!");
+              return 0;
+          }
+          printf("\nPlayer %c wins!!",currentplayer);
+        }
+  }
+  else{
+    printf("\n\n\nMODE: PLAYER (X) VS COMPUTER (O)\n\nThe LUCK GODS have decided that ");
+    int x,y;
+    char currentplayer;
+    int toss2=toss();
+    if(toss2==1){
+        currentplayer='X';
+        printf("player (X) goes first!\n\nPlayer, enter the position where you want to place your X:\nRow: ");
+        scanf("%d",&x);
+        printf("\nColumn:");
+        scanf("%d",&y);
+        x--;
+        y--;
+        arr[x][y]='X';
+        currentplayer='O';
+        while(!end()){
+          print();
+          if(currentplayer=='X'){
+            printf("\nPlayer, enter the position where you want to place your X:\nRow: ");
             scanf("%d",&x);
-            printf("\nColumn:");
+            printf("\nColumn: ");
             scanf("%d",&y);
-            x--;
-            y--;
-            arr[x][y]=currentplayer;
-            currentplayer='O';
-            while(!end()){
-                print();
-                printf("\nPlayer %c, enter the position where you want to place your %c:\nRow: ",currentplayer,currentplayer);
-                scanf("%d",&x);
-                printf("\nColumn: ");
-                scanf("%d",&y);
-                x--;
-                y--;
-                if(valid(x,y)){
-                    arr[x][y]=currentplayer;
-                    if(currentplayer=='O'){
-                        currentplayer='X';
-                    }
-                    else{
-                        currentplayer='O';
-                    }
-                }
-                else{
-                        printf("\nINVALID POSITION OR MOVE!");
-                }   
-            }
-            print();
-            if(end==0){
-                printf("\nIt's a draw!!");
-                return 0;
-            }
-            printf("\nPlayer %c wins!!",currentplayer);
+          }
+          else{//computer er turn ta ekhane dibo
+            x=rand()%5+1;
+            y=rand()%5+1;
+            printf("\nComputer's move:\nRow: %d\nColumn: %d\n",x,y);
+          }
+          x--;
+          y--;
+          if(valid(x,y)){
+              arr[x][y]=currentplayer;
+              if(currentplayer=='O'){
+                  currentplayer='X';
+              }
+              else{
+                  currentplayer='O';
+              }
+          }
+          else{
+                printf("\nINVALID POSITION OR MOVE!");
+          }
+        }
+        print();
+        if(end()==0){
+            printf("\nIt's a draw!!");
+            return 0;
+        }
+        if(currentplayer=='O'){
+          printf("\nPlayer wins!!");
         }
         else{
-            currentplayer='O';
-            printf("player O goes first!\n\nPlayer O, enter the position where you want to place your X:\nRow: ");
-            scanf("%d",&x);
-            printf("\nColumn:");
-            scanf("%d",&y);
-            x--;
-            y--;
-            arr[x][y]=currentplayer;
-            currentplayer='X';
-            while(!end()){
-                print();
-                printf("\nPlayer %c, enter the position where you want to place your %c:\nRow: ",currentplayer,currentplayer);
-                scanf("%d",&x);
-                printf("\nColumn: ");
-                scanf("%d",&y);
-                x--;
-                y--;
-                if(valid(x,y)){
-                    arr[x][y]=currentplayer;
-                    if(currentplayer=='O'){
-                        currentplayer='X';
-                    }
-                    else{
-                        currentplayer='O';
-                    }
-                }
-                else{
-                        printf("\nINVALID POSITION OR MOVE!");
-                }   
-            }
-            print();
-            if(end==0){
-                printf("\nIt's a draw!!");
-                return 0;
-            }
-            printf("\nPlayer %c wins!!",currentplayer);
+          printf("\nComputer wins!!");
         }
-        return 0;
+    }
+    else{
+      currentplayer='O';
+      printf("Computer (O) goes first!");
+      x=rand()%5+1;
+      y=rand()%5+1;
+      x--;
+      y--;
+      printf("\nComputer's move:\nRow: %d\nColumn: %d\n",x,y);
+      arr[x][y]='O';
+      print();
+      currentplayer='X';
+      while(!end()){
+        if(currentplayer=='X'){
+          printf("\nPlayer, enter the position where you want to place your %c:\nRow: ",currentplayer);
+          scanf("%d",&x);
+          printf("\nColumn: ");
+          scanf("%d",&y);
+        }
+        else{//computer er turn ta ekhane dibo
+          x=rand()%5+1;
+          y=rand()%5+1;
+          printf("\nComputer's move:\nRow: %d\nColumn: %d\n",x,y);
+        }
+        x--;
+        y--;
+        if(valid(x,y)){
+            arr[x][y]=currentplayer;
+            if(currentplayer=='O'){
+                currentplayer='X';
+            }
+            else{
+                currentplayer='O';
+            }
+        }
+        else{
+                printf("\nINVALID POSITION OR MOVE!");
+        }
+        print();
+      }
+      if(end()==0){
+          printf("\nIt's a draw!!");
+          return 0;
+      }
+      if(currentplayer=='O'){
+        printf("\nPlayer wins!!");
+      }
+      else{
+        printf("\nComputer wins!!");
+      }
+    }
+  }
+  return 0;
 }
